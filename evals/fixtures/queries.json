@@ -1,0 +1,7 @@
+[
+    {
+        "query": "what is the architecture?",
+        "expected_route": "direct-retrieve",
+        "relevant_chunks": ["c1", "c2"]
+    }
+]
