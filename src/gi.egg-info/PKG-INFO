@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: gi
+Version: 0.1.0
+Summary: Permission-aware adaptive retrieval and grounded answers
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: pydantic<3,>=2
+Requires-Dist: pydantic-settings<3,>=2
+Requires-Dist: fastapi<1,>=0.115
+Requires-Dist: uvicorn<1,>=0.30
+Requires-Dist: httpx<1,>=0.27
+Requires-Dist: rank-bm25<1,>=0.2
