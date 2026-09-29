@@ -40,3 +40,6 @@ Next: evaluation and security acceptance.
 Task 13 complete: evaluations verify separated metric results and end-to-end ACL/cache/revocation gates pass integration tests; 55 tests pass.
 ASSUMPTION: Baseline metrics thresholding for release will be handled outside the application code via CI gating.
 Next: Ready for production tuning.
+Task 14 complete: polished docs/index.html to a premium matte finish and brutalist dark UI, improved Mermaid diagram scaling and layout.
+ASSUMPTION: The UI is static presentation only and contains no business logic.
+Next: Implement JWT-based authentication.
