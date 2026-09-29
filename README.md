@@ -1,4 +1,4 @@
-# Permission-Aware Adaptive RAG Platform 🛡️
+# Permission-Aware Adaptive RAG Platform 
 
 > Internal knowledge search over docs, tickets, and wikis with strict ACL-filtered hybrid retrieval, query routing, incremental ingestion, and semantic caching.
 
