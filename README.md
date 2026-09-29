@@ -6,6 +6,9 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-teal.svg)
+[![Live UI](https://img.shields.io/badge/Live_UI-Architecture_Overview-orange.svg)](https://jyotiraditya21-bug.github.io/permission-aware-RAG/)
+
+🌐 **[View the Live Architecture UI](https://jyotiraditya21-bug.github.io/permission-aware-RAG/)**
 
 ## Problem Statement
 In enterprise environments, knowledge is siloed across wikis, ticketing systems, and secure documents. Existing Retrieval-Augmented Generation (RAG) platforms often leak sensitive data by post-filtering results or caching answers without strict tenant/user segregation. This platform solves the enterprise knowledge search problem by ensuring that Access Control Lists (ACL) are enforced *at query time before retrieval*, making data leakage impossible by design.
