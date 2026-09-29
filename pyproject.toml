@@ -1,0 +1,26 @@
+[project]
+name = "gi"
+version = "0.1.0"
+description = "Permission-aware adaptive retrieval and grounded answers"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["pydantic>=2,<3", "pydantic-settings>=2,<3", "fastapi>=0.115,<1", "uvicorn>=0.30,<1", "httpx>=0.27,<1", "rank-bm25>=0.2,<1"]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-asyncio>=0.24,<2", "pytest-cov>=6,<8", "ruff>=0.9,<1", "mypy>=1.14,<2"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+exclude = ["tests/"]
+
+[tool.uv.workspace]
+members = []
