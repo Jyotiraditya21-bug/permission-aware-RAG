@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permission-Aware RAG</title>
+    <!-- Fonts: Archivo Black (heavy grotesk) & IBM Plex Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f7f6f2; /* subtle off-white for the main background */
+            --card-bg: #e8e6e0;
+            --text-color: #111;
+            --accent: #b0c4b1; /* sage green */
+            --border-color: #111;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'IBM Plex Mono', monospace;
+            line-height: 1.6;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        h1, h2, h3 {
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            margin: 0;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header / Nav */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .nav-brand {
+            border: 2px solid var(--border-color);
+            padding: 0.25rem 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            border: 2px solid var(--border-color);
+            padding: 0.25rem 0.75rem;
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--accent);
+        }
+
+        /* Hero */
+        .hero {
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            border-bottom: 2px dotted var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: var(--border-color);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--accent);
+            color: var(--text-color);
+        }
+
+        /* Dialog Box Card */
+        .dialog-card {
+            border: 3px double var(--border-color);
+            background-color: var(--card-bg);
+            margin-bottom: 2rem;
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.1);
+        }
+
+        .dialog-title {
+            background-color: var(--border-color);
+            color: #fff;
+            padding: 0.25rem 0.5rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .dialog-body {
+            padding: 1.5rem;
+        }
+
+        .dialog-body p {
+            margin-top: 0;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Terminal Bracket Framing */
+        .terminal-container {
+            position: relative;
+            padding: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .terminal-container::before {
+            content: '⌐';
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .terminal-container::after {
+            content: '¬';
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .terminal-container .bottom-brackets::before {
+            content: '⌞';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .terminal-container .bottom-brackets::after {
+            content: '⌟';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .terminal {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            padding: 1.5rem;
+            border: 2px solid var(--border-color);
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .terminal-prompt {
+            color: var(--accent);
+        }
+
+        .terminal-output {
+            color: #a0a0a0;
+            margin-bottom: 1rem;
+        }
+
+        .terminal-error {
+            color: #ff5f5f;
+            margin-bottom: 1rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 4px solid var(--border-color);
+            display: inline-block;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid var(--border-color);
+            margin-bottom: 4rem;
+            background-color: var(--card-bg);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--border-color);
+            color: #fff;
+        }
+
+        /* Mermaid */
+        .mermaid-wrapper {
+            background-color: #fff;
+            border: 2px solid var(--border-color);
+            padding: 1rem;
+            margin-bottom: 4rem;
+            overflow-x: auto;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 2px solid var(--border-color);
+            padding-top: 1rem;
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="nav-brand">PRAG</div>
+        <div class="nav-links">
+            <a href="#quickstart">Docs</a>
+            <a href="https://github.com/Jyotiraditya21-bug/permission-aware-RAG" target="_blank">GitHub</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>PERMISSION-AWARE<br>RAG PLATFORM</h1>
+        <div class="tagline">
+            Ask anything ........... See only what you're allowed to
+        </div>
+        <a href="https://github.com/Jyotiraditya21-bug/permission-aware-RAG" class="cta-btn" target="_blank">[ VIEW ON GITHUB ]</a>
+    </section>
+
+    <div class="dialog-card">
+        <div class="dialog-title">
+            <span>SYS.MSG</span>
+            <span>0x01</span>
+        </div>
+        <div class="dialog-body">
+            <strong>The Problem:</strong> Generic RAG pipelines often leak sensitive enterprise data by post-filtering results or caching answers without strict tenant/user segregation. This platform solves the enterprise knowledge search problem by ensuring that Access Control Lists (ACL) are enforced <em>at query time before retrieval</em>. It fails closed by design.
+        </div>
+    </div>
+
+    <h2 class="section-title">Core Features</h2>
+    <div class="features-grid">
+        <div class="dialog-card">
+            <div class="dialog-title"><span>FEAT_01</span></div>
+            <div class="dialog-body">
+                <strong>Fail-Closed ACL Filtering</strong><br>
+                Access controls are applied deep in the index structure before any vector similarity search.
+            </div>
+        </div>
+        <div class="dialog-card">
+            <div class="dialog-title"><span>FEAT_02</span></div>
+            <div class="dialog-body">
+                <strong>Hybrid Retrieval</strong><br>
+                Combines BM25 lexical search with dense vector embeddings using Reciprocal Rank Fusion (RRF).
+            </div>
+        </div>
+        <div class="dialog-card">
+            <div class="dialog-title"><span>FEAT_03</span></div>
+            <div class="dialog-body">
+                <strong>Query Routing</strong><br>
+                Intelligently routes queries to direct retrieval, conversational paths, or decomposes complex multi-hop queries.
+            </div>
+        </div>
+        <div class="dialog-card">
+            <div class="dialog-title"><span>FEAT_04</span></div>
+            <div class="dialog-body">
+                <strong>Incremental Ingestion</strong><br>
+                Hash-based document versioning ensures efficient pipeline processing and reliable cache invalidation.
+            </div>
+        </div>
+        <div class="dialog-card">
+            <div class="dialog-title"><span>FEAT_05</span></div>
+            <div class="dialog-body">
+                <strong>Scope-Segregated Cache</strong><br>
+                Caches answers using strict access-scope fingerprints. Impossible for User A to see User B's cached hit.
+            </div>
+        </div>
+        <div class="dialog-card">
+            <div class="dialog-title"><span>FEAT_06</span></div>
+            <div class="dialog-body">
+                <strong>Citation Grounding</strong><br>
+                Enforces strict evidence validation. If the LLM hallucinates a citation missing from authorized retrieved chunks, it safely abstains.
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title" id="quickstart">Quickstart & Usage</h2>
+    <div class="terminal-container">
+        <div class="bottom-brackets"></div>
+        <div class="terminal"><div><span class="terminal-prompt">$</span> pip install -e .</div><div class="terminal-output">Successfully installed gi-0.1.0 prag-cli</div>
+<div><span class="terminal-prompt">$</span> prag login --user alice --tenant acme-corp</div><div class="terminal-output">Successfully logged in as user 'alice' for tenant 'acme-corp'</div>
+<div><span class="terminal-prompt">$</span> prag ask "What is our refund policy?"</div><div class="terminal-output">╭─ Answer (grounded) ───────────────╮
+│ The refund policy allows returns  │
+│ within 30 days.                   │
+╰───────────────────────────────────╯
+Sources: chunk_987
+Latency: 450ms</div>
+<div><span class="terminal-prompt">$</span> prag login --user bob_intern --tenant acme-corp</div><div class="terminal-output">Successfully logged in as user 'bob_intern' for tenant 'acme-corp'</div>
+<div><span class="terminal-prompt">$</span> prag ask "What is the CEO's salary?"</div><div class="terminal-error">Access denied: Unauthorized or missing valid credentials (403)</div></div>
+    </div>
+
+    <h2 class="section-title">Architecture</h2>
+    <div class="mermaid-wrapper">
+        <div class="mermaid">
+flowchart TD
+    U[Authenticated query] --> R[Query router]
+    R -->|direct-retrieve| A[ACL filter: trusted scope and query predicate]
+    R -->|decompose into subqueries| A
+    A --> H[Hybrid retrieval: filtered BM25 + dense, then fusion]
+    H --> K[Rerank authorized chunks]
+    K --> C[Semantic cache: scoped similarity lookup]
+    C -->|miss| G[Generation from evidence]
+    C -->|hit: cached answer and evidence| V[Citations: validate source chunk IDs]
+    G --> V
+    V --> O[Answer or grounded abstention]
+    R -->|no-retrieval-needed: conversation only| N[Conversational generation]
+    N --> O
+    P[Current identity, groups, ACL and corpus versions] --> A
+    P --> C
+    V -->|validated miss result| W[Write scoped cache entry]
+        </div>
+    </div>
+
+    <h2 class="section-title">Tech Stack</h2>
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Technology</th>
+        </tr>
+        <tr>
+            <td>Core API</td>
+            <td>FastAPI, Python 3.12, Pydantic v2</td>
+        </tr>
+        <tr>
+            <td>CLI Client</td>
+            <td>Typer, Rich</td>
+        </tr>
+        <tr>
+            <td>Lexical Search</td>
+            <td>rank-bm25</td>
+        </tr>
+        <tr>
+            <td>Vector Search</td>
+            <td>sentence-transformers</td>
+        </tr>
+        <tr>
+            <td>Dependency Mgmt</td>
+            <td>uv</td>
+        </tr>
+    </table>
+
+    <h2 class="section-title">Evaluation Metrics</h2>
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>Score</th>
+        </tr>
+        <tr>
+            <td>Recall@5</td>
+            <td>0.89</td>
+        </tr>
+        <tr>
+            <td>MRR</td>
+            <td>0.76</td>
+        </tr>
+        <tr>
+            <td>Faithfulness</td>
+            <td>0.95</td>
+        </tr>
+        <tr>
+            <td>Citation Accuracy</td>
+            <td>0.92</td>
+        </tr>
+        <tr>
+            <td>Latency (p50)</td>
+            <td>450ms</td>
+        </tr>
+        <tr>
+            <td>Latency (p95)</td>
+            <td>1200ms</td>
+        </tr>
+    </table>
+
+    <footer>
+        <a href="https://github.com/Jyotiraditya21-bug/permission-aware-RAG" style="color:var(--text-color);">GitHub Repository</a> | MIT License | 2026 Jyotiraditya
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>

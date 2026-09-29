@@ -1,0 +1,2 @@
+[console_scripts]
+prag = src.cli.main:app

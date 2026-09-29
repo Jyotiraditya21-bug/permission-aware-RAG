@@ -1,3 +1,4 @@
+LICENSE
 README.md
 pyproject.toml
 src/acl.py
@@ -10,9 +11,12 @@ src/models.py
 src/router.py
 src/service.py
 src/settings.py
+src/cli/__init__.py
+src/cli/main.py
 src/gi.egg-info/PKG-INFO
 src/gi.egg-info/SOURCES.txt
 src/gi.egg-info/dependency_links.txt
+src/gi.egg-info/entry_points.txt
 src/gi.egg-info/requires.txt
 src/gi.egg-info/top_level.txt
 src/indexes/__init__.py
@@ -35,6 +39,7 @@ tests/test_auth.py
 tests/test_cache.py
 tests/test_chunking.py
 tests/test_citations.py
+tests/test_cli.py
 tests/test_evals.py
 tests/test_fusion.py
 tests/test_generation.py

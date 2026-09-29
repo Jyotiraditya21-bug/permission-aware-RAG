@@ -4,6 +4,7 @@ api
 auth
 cache
 citations
+cli
 core
 generation
 indexes
