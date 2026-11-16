@@ -1,14 +1,16 @@
 import pytest
+
 from src.cache import SemanticCache
 from src.generation import Generator
 from src.indexes.dense import DenseIndex
 from src.indexes.lexical import LexicalIndex
 from src.ingestion.publication import Publisher
-from src.models import AccessScope, Answer, QueryRequest, RetrievalResult, Version
+from src.models import AccessScope, Answer, QueryRequest
 from src.retrieval.hybrid import HybridRetriever
 from src.retrieval.rerank import RerankingPipeline
 from src.router import QueryRouter
 from src.service import RAGService
+
 
 class MockLLM:
     async def generate(self, prompt, text):

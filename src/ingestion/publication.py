@@ -1,5 +1,5 @@
 """Atomic dual-index publication management."""
-from typing import Sequence
+from collections.abc import Sequence
 
 from src.indexes.dense import DenseIndex
 from src.indexes.lexical import LexicalIndex

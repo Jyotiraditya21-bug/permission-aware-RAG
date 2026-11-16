@@ -4,7 +4,6 @@ from pydantic import ValidationError
 
 from src.settings import Settings
 
-
 # Test values only; production tuning is intentionally not defaulted.
 VALUES = {
     "lexical_candidates": 20, "dense_candidates": 20, "fusion_rank_constant": 60,

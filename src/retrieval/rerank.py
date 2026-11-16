@@ -1,6 +1,9 @@
 """Reranking and bounding candidate evidence sets."""
-from typing import Protocol, Sequence
+from collections.abc import Sequence
+from typing import Protocol
+
 from src.models import RetrievalResult
+
 
 class Reranker(Protocol):
     async def rerank(self, query: str, texts: Sequence[str]) -> tuple[float, ...]:

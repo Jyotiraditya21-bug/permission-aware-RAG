@@ -19,6 +19,18 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 100
 
+[tool.ruff.lint]
+ignore = [
+    "B008",   # FastAPI Depends() in default parameter values
+    "BLE001", # Blind exception catching
+    "S110",   # try-except-pass
+    "SIM117", # Nested with statements
+    "C408",   # Unnecessary dict() call
+    "SIM102", # Nested if statements
+    "SIM210", # Unnecessary True if ... else False
+    "RUF059", # Unpacked variable never used
+]
+
 [tool.mypy]
 python_version = "3.12"
 strict = true

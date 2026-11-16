@@ -1,7 +1,10 @@
 import json
+
 import pytest
+
 from src.generation import Generator
 from src.models import RetrievalResult, Version
+
 
 class MockLLM:
     def __init__(self, response):

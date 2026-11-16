@@ -1,5 +1,6 @@
 """Lexical index adapter with pre-retrieval ACL filtering using BM25."""
-from typing import Sequence
+from collections.abc import Sequence
+
 import rank_bm25
 
 from src.acl import permitted

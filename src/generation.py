@@ -1,8 +1,8 @@
 """Grounded generation producing claim citations."""
 import json
 import uuid
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 from src.citations import validate_citations
 from src.models import Answer, Citation, RetrievalResult, Route

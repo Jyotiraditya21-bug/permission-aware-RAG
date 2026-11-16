@@ -1,6 +1,8 @@
 import pytest
+
 from src.metrics.generation import Evaluator
 from src.models import Answer, Citation
+
 
 class MockLLM:
     def __init__(self, score):

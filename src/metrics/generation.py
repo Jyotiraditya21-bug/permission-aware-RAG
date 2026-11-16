@@ -1,5 +1,6 @@
 """Generation metrics reporting evidence faithfulness and citation validity."""
 from pathlib import Path
+
 from src.models import Answer, Contract
 from src.router import LLMClient
 

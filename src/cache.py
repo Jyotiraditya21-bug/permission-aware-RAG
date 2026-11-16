@@ -1,9 +1,10 @@
 """Semantic answer caching with exact scope and evidence compatibility."""
 import time
-from typing import Sequence
+from collections.abc import Sequence
+
 from src.acl import fingerprint
 from src.indexes.dense import cosine_similarity
-from src.models import AccessScope, Answer, Route, RetrievalResult
+from src.models import AccessScope, Answer, RetrievalResult, Route
 
 
 class CacheEntry:
