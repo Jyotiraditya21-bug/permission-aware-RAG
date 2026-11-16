@@ -1,4 +1,5 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+
 import pytest
 
 from src.indexes.dense import DenseIndex
@@ -34,7 +35,7 @@ def make_record(doc_id="doc1", deleted=False, acl=None) -> SourceRecord:
         document_id=doc_id,
         tenant_id="tenant-a",
         text="python async architecture",
-        modified_at=datetime.now(timezone.utc),
+        modified_at=datetime.now(UTC),
         content_hash="hash1",
         deleted=deleted,
         acl=acl or make_acl(),

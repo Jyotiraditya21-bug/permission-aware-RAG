@@ -1,6 +1,6 @@
 """Dense index adapter with pre-retrieval ACL filtering."""
 import math
-from typing import Sequence
+from collections.abc import Sequence
 
 from src.acl import permitted
 from src.models import AccessScope, Chunk

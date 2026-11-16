@@ -3,10 +3,17 @@ import unittest
 from pydantic import ValidationError
 
 from src.models import (
-    AccessScope, Answer, Chunk, Citation, Contract, QueryRequest,
-    RetrievalResult, SourceACL, SourceRecord, Version,
+    AccessScope,
+    Answer,
+    Chunk,
+    Citation,
+    Contract,
+    QueryRequest,
+    RetrievalResult,
+    SourceACL,
+    SourceRecord,
+    Version,
 )
-
 
 ACL = {
     "principal_ids": ["user-1"], "group_ids": [],

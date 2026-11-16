@@ -1,5 +1,6 @@
 from src.metrics.retrieval import calculate_retrieval_metrics
 
+
 def test_calculate_metrics():
     # Hits at rank 2
     m = calculate_retrieval_metrics(

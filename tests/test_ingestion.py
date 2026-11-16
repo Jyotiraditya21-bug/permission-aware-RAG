@@ -1,5 +1,7 @@
 from unittest.mock import AsyncMock
+
 import pytest
+
 from src.ingestion.pipeline import prepare, validate_vectors
 from src.ingestion.state import change_kind, document_key
 

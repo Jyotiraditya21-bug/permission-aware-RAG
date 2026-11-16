@@ -1,5 +1,6 @@
 from src.retrieval.fusion import reciprocal_rank_fusion
 
+
 def test_reciprocal_rank_fusion():
     lexical = (
         ("c1", 0.9),

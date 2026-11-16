@@ -1,14 +1,13 @@
 import json
 import time
 from pathlib import Path
-from typing import Optional
 
 import httpx
 import typer
 from rich import print
 from rich.console import Console
-from rich.table import Table
 from rich.panel import Panel
+from rich.table import Table
 
 app = typer.Typer(help="Permission-Aware RAG CLI (prag)")
 console = Console()
@@ -98,7 +97,7 @@ def ask(
         console.print(f"[red]Error: Request to {state.api_url} timed out.[/red]")
         raise typer.Exit(1)
     except Exception as e:
-        console.print(f"[red]Error: An unexpected error occurred: {str(e)}[/red]")
+        console.print(f"[red]Error: An unexpected error occurred: {e!s}[/red]")
         raise typer.Exit(1)
         
     latency_ms = int((time.time() - start_time) * 1000)

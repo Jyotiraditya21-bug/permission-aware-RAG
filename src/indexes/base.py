@@ -1,5 +1,6 @@
 """Base contract and protocols for ACL-filtered index adapters."""
-from typing import Protocol, Sequence
+from collections.abc import Sequence
+from typing import Protocol
 
 from src.models import AccessScope, Chunk
 

@@ -1,6 +1,8 @@
 """Citation validation to ensure reference integrity against authorized evidence."""
-from typing import Sequence
+from collections.abc import Sequence
+
 from src.models import Citation, RetrievalResult
+
 
 def validate_citations(
     citations: Sequence[Citation], 

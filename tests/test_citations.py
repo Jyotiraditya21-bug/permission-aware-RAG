@@ -1,6 +1,6 @@
-import pytest
 from src.citations import validate_citations
 from src.models import Citation, RetrievalResult, Version
+
 
 def make_result(chunk_id):
     return RetrievalResult(

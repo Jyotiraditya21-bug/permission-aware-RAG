@@ -1,6 +1,6 @@
-import time
 from src.cache import SemanticCache
 from src.models import AccessScope, Answer, Citation, RetrievalResult, Version
+
 
 def test_cache_hit_with_compatible_scope_and_evidence():
     cache = SemanticCache(similarity_threshold=0.9)

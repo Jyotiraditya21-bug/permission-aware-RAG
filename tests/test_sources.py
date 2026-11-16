@@ -1,7 +1,9 @@
 import json
 from pathlib import Path
+
 import pytest
 from pydantic import ValidationError
+
 from src.ingestion.sources import SourceBatch, normalize
 
 

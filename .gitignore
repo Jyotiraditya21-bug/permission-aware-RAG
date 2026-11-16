@@ -4,3 +4,6 @@ __pycache__/
 .venv/
 node_modules/
 .ruff_cache/
+.pytest_cache/
+*.egg-info/
+evals/results.json

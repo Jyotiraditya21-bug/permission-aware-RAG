@@ -1,6 +1,8 @@
 """Retrieval metrics reporting recall@k and MRR without leaking content."""
-from typing import Sequence
+from collections.abc import Sequence
+
 from src.models import Contract, Route
+
 
 class RetrievalMetric(Contract):
     trace_id: str

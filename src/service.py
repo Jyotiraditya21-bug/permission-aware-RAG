@@ -8,6 +8,7 @@ from src.retrieval.hybrid import HybridRetriever
 from src.retrieval.rerank import RerankingPipeline
 from src.router import QueryRouter
 
+
 class RAGService:
     def __init__(
         self,

@@ -1,6 +1,7 @@
 """Prepare an update without mutating the published corpus."""
 import math
-from typing import Protocol, Sequence
+from collections.abc import Sequence
+from typing import Protocol
 
 from src.ingestion.chunking import chunk_record
 from src.ingestion.state import DocumentState, change_kind, content_hash

@@ -1,6 +1,8 @@
 import pytest
+
 from src.models import RetrievalResult, Version
 from src.retrieval.rerank import RerankingPipeline
+
 
 class MockReranker:
     def __init__(self, scores):

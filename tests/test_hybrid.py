@@ -1,8 +1,10 @@
 import pytest
+
 from src.indexes.dense import DenseIndex
 from src.indexes.lexical import LexicalIndex
 from src.models import AccessScope, Chunk, SourceACL
 from src.retrieval.hybrid import HybridRetriever
+
 
 class MockEmbedder:
     async def embed(self, texts):
